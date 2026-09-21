@@ -19,10 +19,12 @@ export function createApp({
   checkDatabase,
   allowedOrigins = ["http://localhost:5173"],
   rateLimitMax = defaultLimit,
+  trustProxy = false,
 } = {}) {
   const app = express();
   const attempts = new Map();
   app.disable("x-powered-by");
+  app.set("trust proxy", trustProxy);
   app.use(cors({ origin: allowedOrigins, methods: ["POST", "GET"] }));
   app.use(express.json({ limit: "32kb" }));
 

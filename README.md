@@ -46,7 +46,19 @@ Sanity is the content system. `/admin` links to Studio, and public pages read pu
 
 Set `VITE_SITE_URL` to the actual public origin before building, such as your HTTPS website origin. Without it, the build deliberately omits canonical URLs and the sitemap. With it, the build includes canonical URLs and `sitemap.xml`.
 
-Serve the emitted route directories at their public paths. Configure the host's fallback so unknown page URLs can reach the app's not-found screen and return HTTP 404 where supported. Keep `/api` routed to the API service. The React fallback alone cannot control a static host's HTTP status.
+### Vercel
+
+This repository is ready to import as a Vercel project. Vercel detects the Vite build from `package.json`; no build or output-directory override is needed. The `api/` functions provide `POST /api/contact`, `GET /api/health` and the retired `/api/cms` response, while `vercel.json` sends non-API deep links to the React application.
+
+In **Project Settings → Environment Variables**, set these values for Production (and Preview if contact submissions should work there):
+
+- `DATABASE_URL`: the pooled PostgreSQL/Neon connection string.
+- `VITE_SITE_URL`: the final `https://` site origin, without a trailing path.
+- `VITE_SANITY_PROJECT_ID`, `VITE_SANITY_DATASET`, and `VITE_SANITY_STUDIO_URL` when using Sanity.
+
+Leave `VITE_CONTACT_API_URL` empty when the frontend and API use the same Vercel project. Set `CONTACT_APP_ORIGIN` only when another origin is intentionally calling the API; otherwise the browser uses the same origin. Never add a database URL or Sanity token to a `VITE_` variable, because Vite exposes those values to browsers.
+
+The Vercel runtime trusts its platform proxy so rate limiting keys use the forwarded visitor IP. The limiter is still per warm function instance; use a shared rate-limit store if strict, deployment-wide limits are required.
 
 ## Images
 
