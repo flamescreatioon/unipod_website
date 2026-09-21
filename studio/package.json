@@ -1,0 +1,19 @@
+{
+  "name": "manu-tech-unipod-studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "schema": "sanity schema extract",
+    "seed": "sanity exec scripts/seed.js --with-user-token"
+  },
+  "dependencies": {
+    "@sanity/vision": "6.12.0",
+    "sanity": "6.12.0",
+    "react": "^19.2.2",
+    "react-dom": "^19.2.2",
+    "styled-components": "^6.1.15"
+  }
+}

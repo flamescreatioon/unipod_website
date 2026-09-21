@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+.env.local
+.neon
+.env.*
+!.env.example
+.sanity
