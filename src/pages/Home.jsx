@@ -8,26 +8,29 @@ import { enquiryHref } from "../../shared/enquiries";
 import { useContent } from "../features/content/ContentProvider";
 import { CmsImage } from "../features/content/ContentView";
 import FacilitySlideshow from "../components/FacilitySlideshow";
+import HeroCarousel from "../components/HeroCarousel";
 import SiteFooter from "../components/siteFooter";
-const partnersText = [
-  ["For industry", "Explore talent, prototyping and practical capability."],
-  [
-    "For development partners",
-    "Discuss support for learning and productive enterprise.",
-  ],
-  ["For researchers", "Explore pathways from research to practical outcomes."],
-  [
-    "For students and academics",
-    "Access practical learning, prototyping and enterprise support.",
-  ],
-  [
-    "For founders",
-    "Discuss your venture, project stage and the support you need.",
-  ],
-  [
-    "For Startups",
-    "Discuss your venture, project stage and the support you need.",
-  ],
+const partnersCards = [
+  {
+    category: "For industry",
+    metric: "Direct capability",
+    description: "Access verified technical talent, precision prototyping, and contract manufacturing capacity.",
+  },
+  {
+    category: "For development partners",
+    metric: "High-impact outcomes",
+    description: "Fund and scale youth skills bootcamps, productive enterprise incubation, and sustainable innovation.",
+  },
+  {
+    category: "For researchers & academics",
+    metric: "Lab to market",
+    description: "Bridge scholarly research with practical fabrication, testing labs, and commercialized patent pathways.",
+  },
+  {
+    category: "For founders & startups",
+    metric: "Rapid iteration",
+    description: "Accelerate your venture with on-site prototyping machinery, engineering mentorship, and market support.",
+  },
 ];
 const pathways = [
   [
@@ -61,22 +64,23 @@ export default function Home() {
   const settings = data?.settings || {};
   return (
     <>
-      <section className="hero [--emphasis:var(--color-gold)] relative h-auto min-h-[max(740px,100svh)] overflow-hidden bg-[#081a2a] text-white">
-        <div
-          className="hero-image absolute inset-0 bg-[url('/assets/manutech-lab-hero.webp')] bg-cover bg-center max-[800px]:bg-[url('/assets/manutech-lab-hero-mobile.webp')] max-[800px]:bg-[position:62%_center]"
-          role="img"
-          aria-label="Manufacturing technology workspace"
-        />
-        <div className="absolute inset-0 [&_figure]:m-0 [&_figure]:h-full [&_figure>img]:h-full [&_figure>img]:object-cover [&_figure>img]:rounded-none [&_figcaption]:hidden">
-          <CmsImage value={settings.heroImage} />
-        </div>
+      <section className="hero [--emphasis:var(--color-gold)] relative h-[100svh] min-h-[580px] max-h-[1080px] w-full overflow-hidden bg-[#081a2a] text-white flex flex-col justify-between">
+        {settings.heroImage ? (
+          <div className="absolute inset-0 [&_figure]:m-0 [&_figure]:h-full [&_figure>img]:h-full [&_figure>img]:object-cover [&_figure>img]:rounded-none [&_figcaption]:hidden">
+            <CmsImage value={settings.heroImage} />
+          </div>
+        ) : (
+          <HeroCarousel intervalMs={5000} />
+        )}
         <div className="hero-overlay absolute inset-0" aria-hidden="true" />
         <div className="blueprint-lines absolute inset-0" aria-hidden="true" />
-        <div className="hero-content site-container relative pt-[193px] pb-20 max-[800px]:pt-[140px] max-[800px]:pb-[100px]">
+
+        {/* Content area: dynamically spaced between header (82px/70px) and bottom bar */}
+        <div className="hero-content site-container relative z-[2] my-auto pt-[86px] pb-6 max-[900px]:pt-[74px] max-[900px]:pb-4">
           <Eyebrow light>
             Michael Okpara University of Agriculture, Umudike
           </Eyebrow>
-          <h1 className="max-[480px]:text-[clamp(40px,12vw,50px)]">
+          <h1 className="max-w-[700px] mb-3 md:mb-5 text-[clamp(34px,5.8vw,80px)] leading-[0.98] tracking-[-0.05em]">
             {settings.heroTitle ? (
               <>
                 {settings.heroTitle} <em>{settings.heroEmphasis}</em>
@@ -89,20 +93,22 @@ export default function Home() {
               </>
             )}
           </h1>
-          <p className="hero-copy mb-[29px] max-w-[440px] text-base text-[#e4e9e4]">
+          <p className="hero-copy mb-5 md:mb-7 max-w-[460px] text-[clamp(13.5px,1.4vw,16px)] leading-relaxed text-[#e4e9e4]">
             {settings.heroLead ??
               "A manufacturing technology hub at MOUAU for students, researchers, founders and industry. Explore practical skills, prototyping and enterprise support."}
           </p>
-          <div className="hero-actions flex flex-wrap items-center gap-7 max-[800px]:items-start max-[800px]:flex-col max-[800px]:gap-4">
-            <Link className="button button-gold inline-flex items-center justify-center gap-[27px] border border-transparent px-[17px] py-[13px] font-sans text-[14px] font-extrabold no-underline cursor-pointer bg-gold text-ink max-[800px]:min-h-12" to="/programs">
+          <div className="hero-actions flex flex-wrap items-center gap-4 sm:gap-6">
+            <Link className="button button-gold inline-flex items-center justify-center gap-4 sm:gap-[27px] border border-transparent px-4 sm:px-[17px] py-2.5 sm:py-[13px] font-sans text-[13px] sm:text-[14px] font-extrabold no-underline cursor-pointer bg-gold text-ink" to="/programs">
               Explore programmes <b aria-hidden="true">→</b>
             </Link>
-            <Link className="text-link light inline-flex min-h-11 items-center gap-3 text-[14px] font-extrabold text-white no-underline cursor-pointer" to="/facility-tour">
+            <Link className="text-link light inline-flex min-h-10 items-center gap-2.5 sm:gap-3 text-[13px] sm:text-[14px] font-extrabold text-white no-underline cursor-pointer" to="/facility-tour">
               Plan a visit <b aria-hidden="true">↗</b>
             </Link>
           </div>
         </div>
-        <div className="hero-foot site-container absolute right-0 bottom-[22px] left-0 flex items-center justify-between font-mono text-[10px] tracking-[.05em] text-[#eef4ee9c] max-[800px]:bottom-[13px] max-[800px]:text-[8px]">
+
+        {/* Hero footer line: anchored within the viewport */}
+        <div className="hero-foot site-container relative z-[2] pb-4 sm:pb-6 pt-2 flex items-center justify-between font-mono text-[10px] tracking-[.05em] text-[#eef4ee9c] max-[800px]:text-[8px]">
           <span>MANU-TECH UNIPOD · MOUAU</span>
           <span className="scroll-cue flex items-center gap-[11px] max-[800px]:hidden">
             SCROLL TO EXPLORE <i className="inline-block h-px w-10 bg-white" />
@@ -170,7 +176,7 @@ export default function Home() {
             {settings.opportunityText ??
               "Explore the learning areas, check the published details and send an enquiry about the programme that interests you."}
           </p>
-          <Link className="button button-gold inline-flex items-center justify-center gap-[27px] border border-transparent px-[17px] py-[13px] font-sans text-[14px] font-extrabold no-underline cursor-pointer bg-gold text-ink" to="/programs">
+          <Link className="button button-gold inline-flex items-center justify-center gap-[27px] border border-transparent px-[17px] py-[13px] font-sans text-[14px] font-extrabold no-underline cursor-pointer bg-gold text-ink mr-4" to="/programs">
             View programme areas <b aria-hidden="true">→</b>
           </Link>
           <Link className="text-link mt-3 inline-flex min-h-11 items-center gap-3 text-[14px] font-extrabold text-blue no-underline cursor-pointer" to="/news">
@@ -194,29 +200,29 @@ export default function Home() {
           </p>
           <ul className="m-0 mb-8 list-none border-t border-white/30 p-0">
             <li className="border-b border-white/30 py-[9px] text-[15px] leading-[1.65]">
-              <span className="mr-[13px] font-mono text-[10px] text-gold" aria-hidden="true">01</span> Pitch Garage
+              <span className="mr-[13px] font-mono text-[10px] text-blue" aria-hidden="true">01</span> Pitch Garage
             </li>
             <li className="border-b border-white/30 py-[9px] text-[15px] leading-[1.65]">
-              <span className="mr-[13px] font-mono text-[10px] text-gold" aria-hidden="true">02</span> Makerspace
+              <span className="mr-[13px] font-mono text-[10px] text-blue" aria-hidden="true">02</span> Makerspace
             </li>
             <li className="border-b border-white/30 py-[9px] text-[15px] leading-[1.65]">
-              <span className="mr-[13px] font-mono text-[10px] text-gold" aria-hidden="true">03</span> Rapid Prototyping Studio
+              <span className="mr-[13px] font-mono text-[10px] text-blue" aria-hidden="true">03</span> Rapid Prototyping Studio
             </li>
             <li className="border-b border-white/30 py-[9px] text-[15px] leading-[1.65]">
-              <span className="mr-[13px] font-mono text-[10px] text-gold" aria-hidden="true">04</span> Design Studio
+              <span className="mr-[13px] font-mono text-[10px] text-blue" aria-hidden="true">04</span> Design Studio
             </li>
             <li className="border-b border-white/30 py-[9px] text-[15px] leading-[1.65]">
-              <span className="mr-[13px] font-mono text-[10px] text-gold" aria-hidden="true">05</span> Agriculture and Food Technology
+              <span className="mr-[13px] font-mono text-[10px] text-blue" aria-hidden="true">05</span> Agriculture and Food Technology
               Lab
             </li>
             <li className="border-b border-white/30 py-[9px] text-[15px] leading-[1.65]">
-              <span className="mr-[13px] font-mono text-[10px] text-gold" aria-hidden="true">06</span>Renewable Energy Lab
+              <span className="mr-[13px] font-mono text-[10px] text-blue" aria-hidden="true">06</span>Renewable Energy Lab
             </li>
             <li className="border-b border-white/30 py-[9px] text-[15px] leading-[1.65]">
-              <span className="mr-[13px] font-mono text-[10px] text-gold" aria-hidden="true">07</span> Music and Broadcast Studio
+              <span className="mr-[13px] font-mono text-[10px] text-blue" aria-hidden="true">07</span> Music and Broadcast Studio
             </li>
             <li className="border-b border-white/30 py-[9px] text-[15px] leading-[1.65]">
-              <span className="mr-[13px] font-mono text-[10px] text-gold" aria-hidden="true">08</span> Photography and Videography
+              <span className="mr-[13px] font-mono text-[10px] text-blue" aria-hidden="true">08</span> Photography and Videography
               Studio
             </li>
           </ul>
@@ -226,33 +232,52 @@ export default function Home() {
         </div>
       </section>
       <section
-        className="site-container grid grid-cols-[100px_.85fr_1.15fr] gap-[34px] py-[130px] max-[800px]:grid-cols-1 max-[800px]:gap-[25px] max-[800px]:py-[82px]"
+        className="bg-[#e8e5dc] py-[103px] max-[800px]:py-[72px]"
         id="partner"
         tabIndex={-1}
         aria-labelledby="partner-heading"
       >
-        <div className="flex items-center gap-[9px] font-mono text-[11px] text-blue" aria-hidden="true">
-          01 <i className="h-px w-[26px] bg-blue" />
-        </div>
-        <div className="partner-copy">
-          <Eyebrow>Partner with us</Eyebrow>
-          <h2 id="partner-heading">
-            Progress is a<br />
-            <em>team sport.</em>
-          </h2>
-          <p className="my-[27px] max-w-[290px] text-[13px] text-muted">
-            Connect manufacturing, agriculture, research and young talent
-            through a partnership with the hub.
-          </p>
-        </div>
-        <div className="border-t border-ink">
-          {partnersText.map(([title, description]) => (
-            <Link className="grid min-h-11 grid-cols-[1fr_auto] gap-1 border-b border-ink py-[18px] pb-4 text-ink no-underline" key={title} to={enquiryHref("partnership", title)}>
-              <span className="text-[17px] font-extrabold tracking-[-.04em]">{title}</span>
-              <b className="text-[21px] font-normal text-blue" aria-hidden="true">→</b>
-              <small className="mt-2 max-w-[300px] text-[15px] leading-[1.65] text-muted">{description}</small>
-            </Link>
-          ))}
+        <div className="site-container">
+          <div className="mb-[43px] flex items-end justify-between max-[800px]:block">
+            <div>
+              <Eyebrow>Partner with us</Eyebrow>
+              <h2 id="partner-heading">
+                Progress is a <em>team sport.</em>
+              </h2>
+            </div>
+            <p className="mb-0 max-w-[340px] text-[13px] text-muted max-[800px]:mt-5">
+              Connect manufacturing, agriculture, research and technical talent.
+              Partner with the hub to prototype ideas, accelerate local industry,
+              and solve real-world problems.
+            </p>
+          </div>
+
+          {/* Grid styled identically to "Start here" pathway cards */}
+          <div className="grid grid-cols-4 border-t border-ink max-[800px]:grid-cols-2 max-[480px]:grid-cols-1">
+            {partnersCards.map(({ category, metric, description }, index) => (
+              <article
+                key={category}
+                className={`flex min-h-[315px] flex-col border-r border-ink p-[19px_19px_15px] text-ink first:border-l max-[800px]:min-h-[280px] max-[480px]:min-h-[230px] max-[480px]:border-l max-[480px]:border-t ${index === 0 ? "bg-blue text-white" : ""} ${index === 2 ? "max-[800px]:border-l max-[800px]:border-t" : ""} ${index === 3 ? "max-[800px]:border-t" : ""}`}
+              >
+                <div className="flex justify-between font-mono text-[10px]">
+                  <span aria-hidden="true">0{index + 1}</span>
+                  <span className="uppercase opacity-75">{category}</span>
+                </div>
+                <h3 className="mt-[38px] mb-[13px] text-[25px] max-[800px]:mt-[22px] max-[800px]:text-[21px]">
+                  {metric}
+                </h3>
+                <p className="mb-4 text-[15px] leading-[1.65] opacity-[.78]">
+                  {description}
+                </p>
+                <Link
+                  className="mt-auto flex min-h-11 items-center justify-between gap-3 pt-[22px] text-[14px] font-extrabold text-inherit no-underline max-[480px]:pt-3"
+                  to={enquiryHref("partnership", category)}
+                >
+                  Explore pathway <b className="text-[17px] font-normal" aria-hidden="true">→</b>
+                </Link>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
       <SiteFooter />

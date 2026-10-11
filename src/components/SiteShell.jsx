@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { nav } from "../data/siteData";
 import PartnerLogos from "./PartnerLogos";
 import { ContactDetails } from "../features/content/ContentView";
+import { useContent } from "../features/content/ContentProvider";
 import RouteEffects from "./RouteEffects";
 
 export function Brand({ includeUndp = false }) {
@@ -117,53 +118,184 @@ export function Header({ inner = false }) {
 }
 
 export function Footer() {
+  const { data } = useContent();
+  const settings = data?.settings || {};
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    setSubscribed(true);
+  };
+
   return (
-    <footer className="site-footer bg-[#0b121b] pt-[47px] text-white" aria-labelledby="site-footer-heading">
-      <div className="footer-grid site-container grid grid-cols-[1fr_1.4fr_.65fr] gap-20 pb-11 max-[800px]:grid-cols-1 max-[800px]:gap-7 max-[800px]:pb-8">
-        <div className="footer-brand">
-          <Brand />
-          <h2 className="my-7 mb-3.5 max-w-[300px] text-[clamp(28px,3vw,42px)] leading-[1.05] text-white" id="site-footer-heading">Build what moves us forward.</h2>
-          <p className="mb-0 max-w-[340px] text-[17px] leading-[1.3] text-[#a2aaa4]">Building practical capability for a more productive future.</p>
-          <Link className="footer-cta mt-[18px] inline-flex items-center gap-3 text-[13px] text-[#8dd4f7] no-underline" to="/contact">
-            Start an enquiry <b className="text-lg font-normal" aria-hidden="true">→</b>
-          </Link>
+    <footer className="site-footer bg-[#070d14] text-white selection:bg-gold selection:text-ink border-t border-white/10" aria-labelledby="site-footer-heading">
+      {/* Top 3-Column Wireframe Section */}
+      <div className="site-container pt-14 pb-16 max-[900px]:py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/15 border-y border-white/15 relative">
+          
+          {/* Subtle crosshair tick marks at division intersections (as in inspiration) */}
+          <span className="hidden md:block absolute -top-[5px] left-1/3 -translate-x-1/2 text-white/30 font-mono text-[10px] pointer-events-none select-none">+</span>
+          <span className="hidden md:block absolute -bottom-[6px] left-1/3 -translate-x-1/2 text-white/30 font-mono text-[10px] pointer-events-none select-none">+</span>
+          <span className="hidden md:block absolute -top-[5px] left-2/3 -translate-x-1/2 text-white/30 font-mono text-[10px] pointer-events-none select-none">+</span>
+          <span className="hidden md:block absolute -bottom-[6px] left-2/3 -translate-x-1/2 text-white/30 font-mono text-[10px] pointer-events-none select-none">+</span>
+
+          {/* Column 1: CONTACT */}
+          <div className="py-8 md:py-10 md:pr-10 flex flex-col justify-between min-h-[260px]">
+            <div>
+              <span className="block font-mono text-[11px] uppercase tracking-[0.14em] text-[#8ea4b8] mb-8">
+                CONTACT
+              </span>
+              <div className="space-y-2 text-[15px] font-medium">
+                {settings.email ? (
+                  <div>
+                    <a href={`mailto:${settings.email}`} className="text-white hover:text-gold transition-colors no-underline">
+                      {settings.email}
+                    </a>
+                  </div>
+                ) : (
+                  <div>
+                    <a href="mailto:contact@manutech-unipod.edu.ng" className="text-white hover:text-gold transition-colors no-underline">
+                      contact@manutech-unipod.edu.ng
+                    </a>
+                  </div>
+                )}
+                <div>
+                  <Link to="/contact" className="text-[#9ab1c6] hover:text-white transition-colors no-underline">
+                    Get in touch
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-white/10 text-xs text-[#8ea4b8] space-y-1">
+              <p className="m-0 leading-relaxed font-sans">
+                Manu-Tech UniPod · MOUAU
+              </p>
+              <p className="m-0 leading-relaxed text-[#6f8294]">
+                Umudike, Abia State, Nigeria
+              </p>
+              <Link to="/about" className="inline-flex items-center gap-1.5 text-gold hover:text-white pt-2 text-[13px] font-semibold no-underline transition-colors">
+                Learn more <span aria-hidden="true">↗</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Column 2: CONNECT */}
+          <div className="py-8 md:py-10 md:px-10 flex flex-col justify-between min-h-[260px]">
+            <div>
+              <span className="block font-mono text-[11px] uppercase tracking-[0.14em] text-[#8ea4b8] mb-8">
+                CONNECT
+              </span>
+              <div className="grid grid-cols-2 gap-y-3 gap-x-6 text-[14px]">
+                {nav.slice(0, 6).map(([label, url]) => (
+                  <Link
+                    key={url}
+                    to={url}
+                    className="text-white/85 hover:text-gold transition-colors no-underline"
+                  >
+                    {label}
+                  </Link>
+                ))}
+                <Link to="/facility-tour" className="text-white/85 hover:text-gold transition-colors no-underline">
+                  Visit
+                </Link>
+                <Link to="/news" className="text-white/85 hover:text-gold transition-colors no-underline">
+                  News & Impact
+                </Link>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <span className="block font-mono text-[10px] uppercase tracking-[0.12em] text-[#8ea4b8] mb-3">
+                Key Partners
+              </span>
+              <PartnerLogos className="gap-2.5 opacity-80 hover:opacity-100 transition-opacity" includeMouau variant="footer" />
+            </div>
+          </div>
+
+          {/* Column 3: SUBSCRIBE */}
+          <div className="py-8 md:py-10 md:pl-10 flex flex-col justify-between min-h-[260px]">
+            <div>
+              <span className="block font-mono text-[11px] uppercase tracking-[0.14em] text-[#8ea4b8] mb-8">
+                SUBSCRIBE
+              </span>
+              <p className="text-xs text-[#8ea4b8] mb-6 leading-relaxed">
+                Stay updated with innovations, bootcamp cohorts, and prototyping workshops.
+              </p>
+              {subscribed ? (
+                <div className="py-3 px-4 rounded bg-blue-deep/60 border border-gold/40 text-gold text-xs font-mono">
+                  ✓ Thank you for subscribing.
+                </div>
+              ) : (
+                <form onSubmit={handleSubscribe} className="relative flex items-center border-b border-white/30 focus-within:border-gold transition-colors pb-2">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Email address"
+                    className="w-full bg-transparent text-[14px] text-white placeholder:text-[#5f7488] focus:outline-none pr-8 py-1 font-sans"
+                  />
+                  <button
+                    type="submit"
+                    aria-label="Submit newsletter subscription"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-gold cursor-pointer transition-colors p-1"
+                  >
+                    →
+                  </button>
+                </form>
+              )}
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-[#8ea4b8]">
+              <span>Need bespoke support?</span>
+              <Link to="/contact" className="text-gold hover:text-white font-medium no-underline transition-colors">
+                Enquire now ↗
+              </Link>
+            </div>
+          </div>
+
         </div>
-        <div className="footer-info">
-          <span className="mb-4 block font-mono text-[10px] uppercase tracking-[.08em] text-[#a2aaa4]">In partnership with</span>
-          <PartnerLogos className="mt-6 gap-[11px]" includeMouau variant="footer" />
-          <ContactDetails />
-        </div>
-        <nav aria-label="Footer navigation" className="footer-links grid gap-2">
-          <span className="mb-4 block font-mono text-[10px] uppercase tracking-[.08em] text-[#a2aaa4]">Explore</span>
-          {nav.map(([label, url]) => (
-            <Link className="inline-flex min-h-11 items-center text-[14px] text-white no-underline" key={url} to={url}>
-              {label}
-            </Link>
-          ))}
-          <Link className="inline-flex min-h-11 items-center text-[14px] text-white no-underline" to="/facility-tour">Plan a visit</Link>
-          <Link className="inline-flex min-h-11 items-center text-[14px] text-white no-underline" to="/contact">Contact</Link>
-        </nav>
       </div>
-      <div className="footer-bottom mx-auto flex w-[calc(100%-4rem)] max-w-[1200px] flex-wrap justify-between gap-2 border-t border-white/15 py-3 font-mono text-[11px] tracking-wide text-[#a2aaa4] site-container">
-        <span>© {new Date().getFullYear()} Manu-Tech UniPod · MOUAU</span>
-        <span>Umudike, Abia State, Nigeria</span>
-        <a
-          className="inline-flex min-h-8 items-center gap-2 text-[13px] text-white no-underline max-[800px]:w-full"
-          href="#top"
-          onClick={(event) => {
-            event.preventDefault();
-            document.getElementById("top")?.focus({ preventScroll: true });
-            window.scrollTo({
-              top: 0,
-              behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
-                .matches
-                ? "instant"
-                : "smooth",
-            });
-          }}
+
+      {/* Hero Typography Banner: White UNIPOD Wordmark with prominent Yellow Dot */}
+      <div className="site-container select-none border-b border-white/10 pt-12 pb-6 text-center">
+        <h2
+          id="site-footer-heading"
+          className="text-center font-extrabold uppercase tracking-tight text-white leading-[1] mb-0 text-[clamp(64px,16.5vw,230px)] select-none inline-block relative overflow-visible"
         >
-          Back to top <span aria-hidden="true">↑</span>
-        </a>
+          UN<span className="relative inline-block overflow-visible">I<span className="absolute left-1/2 -translate-x-1/2 -top-[0.28em] w-[0.26em] h-[0.26em] rounded-full bg-[#f6b800] ring-2 ring-black/40 block pointer-events-none z-10" aria-hidden="true" /></span>POD
+        </h2>
+      </div>
+
+      {/* Bottom Bar: Copyright, Privacy, and Credits */}
+      <div className="site-container py-5 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] tracking-wide text-[#708497]">
+        <span>© {new Date().getFullYear()} MANU-TECH UNIPOD</span>
+        <div className="flex items-center gap-6">
+          <Link to="/about" className="hover:text-white transition-colors no-underline">
+            About
+          </Link>
+          <Link to="/contact" className="hover:text-white transition-colors no-underline">
+            Contact
+          </Link>
+          <a
+            href="#top"
+            onClick={(event) => {
+              event.preventDefault();
+              document.getElementById("top")?.focus({ preventScroll: true });
+              window.scrollTo({
+                top: 0,
+                behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                  ? "instant"
+                  : "smooth",
+              });
+            }}
+            className="hover:text-gold transition-colors no-underline inline-flex items-center gap-1.5"
+          >
+            Back to top ↑
+          </a>
+        </div>
+        <span className="max-[600px]:w-full text-right max-[600px]:text-left text-[#5b6e80]">
+          MOUAU · Umudike
+        </span>
       </div>
     </footer>
   );

@@ -1,6 +1,22 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { createImageUrlBuilder } from "@sanity/image-url";
 import { sanityClient } from "../lib/sanity";
+
+const DEFAULT_FACILITY_SLIDES = [
+  { src: "/assets/facility/P1079635.jpg", caption: "Photography and Video Studio" },
+  { src: "/assets/facility/P1079638.jpg", caption: "Recording Room and Radio Station" },
+  { src: "/assets/facility/P1079639.jpg", caption: "Recording Room and Radio Station" },
+  { src: "/assets/facility/P1079652.jpg", caption: "Music Studio and Recording Studio" },
+  { src: "/assets/facility/P1079655.jpg", caption: "Agritech and Food Lab" },
+  { src: "/assets/facility/P1079657.jpg", caption: "Prototype Lab" },
+  { src: "/assets/facility/P1079664.jpg", caption: "Design Studio" },
+  { src: "/assets/facility/P1079669.jpg", caption: "Woodworks Workshop" },
+  { src: "/assets/facility/P1079674.jpg", caption: "Metalwork and CNC Workshop" },
+  { src: "/assets/facility/P1079694.jpg", caption: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079695.jpg", caption: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079696.jpg", caption: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079699.jpg", caption: "Prototype Lab" },
+];
 
 function imageUrl(image) {
   if (!sanityClient || !image?.asset) return null;
@@ -17,117 +33,92 @@ function imageUrl(image) {
   }
 }
 
+function getRandomIndex(excludeIndex, length) {
+  if (length <= 1) return 0;
+  let next;
+  do {
+    next = Math.floor(Math.random() * length);
+  } while (next === excludeIndex);
+  return next;
+}
+
 export default function FacilitySlideshow({
   slides = [],
-  intervalSeconds = 7,
+  intervalSeconds = 5,
 }) {
-  const validSlides = useMemo(
-    () =>
-      slides
-        .map((slide) => ({ ...slide, src: imageUrl(slide?.image) }))
-        .filter((slide) => slide.src),
-    [slides],
-  );
-  const slideKey = validSlides.map((slide) => slide.src).join("|");
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
+  const validSlides = useMemo(() => {
+    if (slides && slides.length > 0) {
+      const cmsSlides = slides
+        .map((slide) => ({
+          ...slide,
+          src: slide.src || imageUrl(slide?.image),
+          caption: slide.caption || slide.image?.alt || "",
+        }))
+        .filter((slide) => slide.src);
+      if (cmsSlides.length > 0) return cmsSlides;
+    }
+    return DEFAULT_FACILITY_SLIDES;
+  }, [slides]);
 
-  useEffect(() => setIndex(0), [slideKey]);
+  const [index, setIndex] = useState(() =>
+    Math.floor(Math.random() * validSlides.length)
+  );
+  const indexRef = useRef(index);
+
   useEffect(() => {
-    if (paused || hovered || validSlides.length < 2) return undefined;
-    const delay = Math.max(3, Number(intervalSeconds) || 7) * 1000;
-    const timer = window.setInterval(
-      () => setIndex((current) => (current + 1) % validSlides.length),
-      delay,
-    );
+    indexRef.current = index;
+  }, [index]);
+
+  // Preload images for smooth transition
+  useEffect(() => {
+    validSlides.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.src;
+    });
+  }, [validSlides]);
+
+  // Automatic loop every 5 seconds (uninterrupted)
+  useEffect(() => {
+    if (validSlides.length < 2) return undefined;
+    const delay = Math.max(3, Number(intervalSeconds) || 5) * 1000;
+    const timer = window.setInterval(() => {
+      setIndex((current) => getRandomIndex(current, validSlides.length));
+    }, delay);
     return () => window.clearInterval(timer);
-  }, [hovered, intervalSeconds, paused, validSlides.length]);
+  }, [intervalSeconds, validSlides.length]);
 
   if (!validSlides.length)
-    return <div className="absolute inset-0 scale-[1.02] bg-[url('/assets/manutech-lab-hero.webp')] bg-cover bg-center brightness-[.62] max-[800px]:bg-[url('/assets/manutech-lab-hero-mobile.webp')] max-[800px]:bg-[position:70%_center]" aria-hidden="true" />;
-
-  const slide = validSlides[index % validSlides.length];
-  const move = (direction) =>
-    setIndex(
-      (current) =>
-        (current + direction + validSlides.length) % validSlides.length,
+    return (
+      <div
+        className="absolute inset-0 scale-[1.02] bg-[url('/assets/facility/P1079635.jpg')] bg-cover bg-center brightness-[.62]"
+        aria-hidden="true"
+      />
     );
 
   return (
     <div
       className="absolute inset-0 min-h-[670px] overflow-hidden bg-[#12232d] max-[800px]:relative max-[800px]:inset-auto max-[800px]:h-[350px] max-[800px]:min-h-[350px]"
       aria-label="Facility images"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setHovered(true)}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget))
-          setHovered(false);
-      }}
+      aria-hidden="true"
     >
-      <img
-        className="absolute inset-0 h-full w-full animate-[facility-slide-in_.45s_ease_both] object-cover motion-reduce:animate-none"
-        key={slide.src}
-        src={slide.src}
-        alt={slide.image.alt || slide.caption || "Manu-Tech UniPod facility"}
+      {/* Seamless crossfading background images */}
+      {validSlides.map((slide, idx) => (
+        <div
+          key={slide.src}
+          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
+            idx === index ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          style={{ backgroundImage: `url('${slide.src}')` }}
+          role="img"
+          aria-label={slide.caption || "Manu-Tech UniPod facility"}
+        />
+      ))}
+
+      {/* Subtle bottom gradient overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(0,0,0,.58))]"
+        aria-hidden="true"
       />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(0,0,0,.58))]" aria-hidden="true" />
-      <div className="absolute right-7 bottom-6 left-7 flex items-end justify-between gap-4 text-white max-[800px]:right-5 max-[800px]:bottom-5 max-[800px]:left-5">
-        <div className="flex min-w-0 items-end gap-4" aria-live="polite">
-          {slide.caption && <p className="m-0 max-w-[60%] text-sm max-[800px]:max-w-[55%]">{slide.caption}</p>}
-          {validSlides.length > 1 && (
-            <span className="whitespace-nowrap text-xs tracking-[.08em]">
-              {index + 1} / {validSlides.length}
-            </span>
-          )}
-        </div>
-        {validSlides.length > 1 && (
-          <div className="flex gap-2">
-            <button
-              className="h-10 w-10 cursor-pointer border border-white/60 bg-black/35 text-white hover:bg-gold hover:text-[#12232d] focus-visible:bg-gold focus-visible:text-[#12232d]"
-              type="button"
-              onClick={() => move(-1)}
-              aria-label="Previous facility image"
-            >
-              ←
-            </button>
-            <button
-              className="h-10 w-10 cursor-pointer border border-white/60 bg-black/35 text-white hover:bg-gold hover:text-[#12232d] focus-visible:bg-gold focus-visible:text-[#12232d]"
-              type="button"
-              onClick={() => setPaused((value) => !value)}
-              aria-pressed={paused}
-              aria-label={
-                paused ? "Play facility slideshow" : "Pause facility slideshow"
-              }
-            >
-              {paused ? "▶" : "Ⅱ"}
-            </button>
-            <button
-              className="h-10 w-10 cursor-pointer border border-white/60 bg-black/35 text-white hover:bg-gold hover:text-[#12232d] focus-visible:bg-gold focus-visible:text-[#12232d]"
-              type="button"
-              onClick={() => move(1)}
-              aria-label="Next facility image"
-            >
-              →
-            </button>
-          </div>
-        )}
-      </div>
-      {validSlides.length > 1 && (
-        <div className="absolute right-7 bottom-[78px] flex gap-[7px] max-[800px]:right-5 max-[800px]:bottom-[74px]" aria-label="Choose facility image">
-          {validSlides.map((item, dotIndex) => (
-            <button
-              key={item.src}
-              type="button"
-              className={`h-[9px] w-[9px] cursor-pointer rounded-full border border-white p-0 opacity-80 hover:bg-gold hover:opacity-100 focus-visible:bg-gold focus-visible:opacity-100 ${dotIndex === index ? "bg-gold opacity-100" : "bg-transparent"}`}
-              onClick={() => setIndex(dotIndex)}
-              aria-label={`Show facility image ${dotIndex + 1}`}
-              aria-current={dotIndex === index ? "true" : undefined}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

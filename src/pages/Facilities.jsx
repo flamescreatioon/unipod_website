@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Eyebrow from "../components/Eyebrow";
+import FacilityCarousel from "../components/FacilityCarousel";
 import { enquiryHref } from "../../shared/enquiries";
 import {
   useCollection,
@@ -18,8 +19,9 @@ export default function Facilities() {
   return (
     <>
       <section className="facility-page-hero [--emphasis:var(--color-gold)] relative min-h-[575px] overflow-hidden text-white max-[800px]:min-h-[520px]">
-        <div className="absolute inset-0 scale-[1.02] bg-[url('/assets/manutech-lab-hero.webp')] bg-cover bg-center brightness-[.42] max-[800px]:bg-[url('/assets/manutech-lab-hero-mobile.webp')] max-[800px]:bg-[position:70%_center]" aria-hidden="true" />
-        <div className="site-container relative pt-[102px] max-[800px]:pt-[83px]">
+        <FacilityCarousel intervalMs={5000} />
+        <div className="absolute inset-0 bg-[#081a2a]/75" aria-hidden="true" />
+        <div className="site-container relative z-[2] pt-[102px] max-[800px]:pt-[83px]">
           <Eyebrow light>{page.eyebrow ?? "Facilities & visits"}</Eyebrow>
           <h1 className="mb-[22px] text-[clamp(50px,6vw,82px)]">
             {page.title ? (

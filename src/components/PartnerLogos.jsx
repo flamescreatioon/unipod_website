@@ -1,7 +1,7 @@
 import React from "react";
 import { partnerLogos } from "../data/siteData";
 
-export default function PartnerLogos({ className = "", includeMouau = false, variant = "default" }) {
+export default function PartnerLogos({ className = "", includeMouau = true, variant = "default" }) {
   const logos = includeMouau
     ? [
         ...partnerLogos,

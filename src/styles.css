@@ -36,8 +36,8 @@
   .button b, .text-link b { font-size: 17px; font-weight: 400; }
   .hero-overlay {
     background:
-      linear-gradient(90deg, rgba(4, 16, 28, 0.92) 0%, rgba(6, 22, 38, 0.72) 39%, rgba(4, 16, 28, 0.1) 75%),
-      linear-gradient(0deg, rgba(4, 14, 24, 0.6), transparent 40%);
+      linear-gradient(135deg, rgba(0, 59, 103, 0.2) 0%, rgba(4, 104, 177, 0.2) 50%, rgba(88, 183, 232, 0.2) 100%),
+      linear-gradient(90deg, rgba(4, 16, 28, 0.85) 0%, rgba(4, 16, 28, 0.5) 45%, rgba(4, 16, 28, 0.2) 100%);
   }
   .blueprint-lines {
     background-image:
@@ -55,8 +55,8 @@
   @media (max-width: 800px) {
     .hero-overlay {
       background:
-        linear-gradient(90deg, rgba(4, 16, 28, 0.88), rgba(6, 22, 38, 0.58)),
-        linear-gradient(0deg, rgba(4, 14, 24, 0.65), transparent);
+        linear-gradient(135deg, rgba(0, 59, 103, 0.2) 0%, rgba(4, 104, 177, 0.2) 100%),
+        linear-gradient(90deg, rgba(4, 16, 28, 0.85) 0%, rgba(4, 16, 28, 0.6) 100%);
     }
   }
   @media (prefers-reduced-motion: reduce) {
