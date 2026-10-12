@@ -15,12 +15,13 @@ import {
 import { programmes } from "../../data/programmes";
 import { facilityAreas } from "../../data/facilities";
 import { enterpriseServices } from "../../data/enterprise";
+import { teamMembers } from "../../data/team";
 const defaults = {
   programme: programmes,
   facility: facilityAreas,
   enterprise: enterpriseServices,
   news: [],
-  team: [],
+  team: teamMembers,
 };
 const Context = createContext(null);
 export function ContentProvider({ children }) {
@@ -79,9 +80,15 @@ export function ContentProvider({ children }) {
 export const useContent = () => useContext(Context);
 export function useCollection(type) {
   const { data, configured, error } = useContent();
-  const hasStarterContent = ["programme", "facility", "enterprise"].includes(type);
-  if (!configured || (!data && error && hasStarterContent)) return defaults[type] || [];
-  return (data?.entries || [])
+  const hasStarterContent = [
+    "programme",
+    "facility",
+    "enterprise",
+    "team",
+  ].includes(type);
+  if (!configured || (!data && error && hasStarterContent))
+    return defaults[type] || [];
+  const entries = (data?.entries || [])
     .filter((entry) => entry.contentType === type)
     .map((entry) => ({
       ...entry,
@@ -90,6 +97,7 @@ export function useCollection(type) {
       type: entry.category,
       topics: entry.topics || [],
     }));
+  return entries.length > 0 ? entries : defaults[type] || [];
 }
 export function useNewsArticle(slug) {
   const { configured } = useContent();

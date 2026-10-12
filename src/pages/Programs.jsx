@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Eyebrow from "../components/Eyebrow";
-import PageHero from "../components/PageHero";
 import {
   useCollection,
   usePageContent,
@@ -18,20 +17,67 @@ export default function Programs() {
   const page = usePageContent();
   return (
     <>
-      <PageHero
-        eyebrow="Programmes & training"
-        title={
-          <>
-            Learn it.
-            <br />
-            <em>Then make it real.</em>
-          </>
-        }
-        lead="Explore practical learning in digital design, fabrication, robotics and electronics."
-      />
+      {/* Programs Hero structured identically to Main Hero */}
+      <section className="hero [--emphasis:var(--color-gold)] relative h-[100svh] min-h-[580px] max-h-[1080px] w-full overflow-hidden bg-[#081a2a] text-white flex flex-col justify-between">
+        <div
+          className="hero-image absolute inset-0 bg-[url('/assets/programs/programs-hero.jpg')] bg-cover bg-center"
+          role="img"
+          aria-label="Manu-Tech UniPod programmes and training"
+        />
+        <div className="hero-overlay absolute inset-0" aria-hidden="true" />
+        <div className="blueprint-lines absolute inset-0" aria-hidden="true" />
+
+        {/* Content area: dynamically spaced between header (82px/70px) and bottom bar */}
+        <div className="hero-content site-container relative z-[2] my-auto pt-[86px] pb-6 max-[900px]:pt-[74px] max-[900px]:pb-4">
+          <Eyebrow light>{page.eyebrow ?? "Programmes & training"}</Eyebrow>
+          <h1 className="max-w-[700px] mb-3 md:mb-5 text-[clamp(34px,5.8vw,80px)] leading-[0.98] tracking-[-0.05em]">
+            {page.title ? (
+              <>
+                {page.title} <em>{page.emphasis}</em>
+              </>
+            ) : (
+              <>
+                Learn it.
+                <br />
+                <em>Then make it real.</em>
+              </>
+            )}
+          </h1>
+          <p className="hero-copy mb-5 md:mb-7 max-w-[460px] text-[clamp(13.5px,1.4vw,16px)] leading-relaxed text-[#e4e9e4]">
+            {page.lead ??
+              "Explore practical learning in digital design, fabrication, robotics and electronics."}
+          </p>
+          <div className="hero-actions flex flex-wrap items-center gap-4 sm:gap-6">
+            <a
+              className="button button-gold inline-flex items-center justify-center gap-4 sm:gap-[27px] border border-transparent px-4 sm:px-[17px] py-2.5 sm:py-[13px] font-sans text-[13px] sm:text-[14px] font-extrabold no-underline cursor-pointer bg-gold text-ink"
+              href="#programme-status"
+            >
+              Explore programmes <b aria-hidden="true">↓</b>
+            </a>
+            <Link
+              className="text-link light inline-flex min-h-10 items-center gap-2.5 sm:gap-3 text-[13px] sm:text-[14px] font-extrabold text-white no-underline cursor-pointer"
+              to="/facility-tour"
+            >
+              Plan a visit <b aria-hidden="true">↗</b>
+            </Link>
+          </div>
+          <RichText value={page.body} />
+        </div>
+
+        {/* Hero footer line: anchored within the viewport */}
+        <div className="hero-foot site-container relative z-[2] pb-4 sm:pb-6 pt-2 flex items-center justify-between font-mono text-[10px] tracking-[.05em] text-[#eef4ee9c] max-[800px]:text-[8px]">
+          <span>MANU-TECH UNIPOD · MOUAU</span>
+          <span className="scroll-cue flex items-center gap-[11px] max-[800px]:hidden">
+            SCROLL TO EXPLORE <i className="inline-block h-px w-10 bg-white" />
+          </span>
+          <span className="max-[800px]:hidden">UMUDIKE, ABIA STATE</span>
+        </div>
+      </section>
+
       <section
-        className="site-container mt-[42px] mb-12 border-l-4 border-blue bg-[#e8e5dc] p-8 max-[800px]:p-6"
-        aria-labelledby="programme-status"
+        id="programme-status"
+        className="site-container scroll-mt-24 mt-14 mb-12 border-l-4 border-blue bg-[#e8e5dc] p-8 max-[800px]:mt-8 max-[800px]:p-6"
+        aria-labelledby="programme-status-title"
       >
         <span className="font-mono text-[10px] tracking-[.08em] text-blue">Planning your next step</span>
         <h2 className="mt-3 mb-[18px] text-[clamp(24px,3vw,34px)] text-blue" id="programme-status">

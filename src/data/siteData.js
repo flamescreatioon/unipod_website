@@ -2,7 +2,6 @@ export const nav = [
   ["About", "/about"],
   ["Programmes", "/programs"],
   ["Facilities", "/facilities"],
-  ["Enterprise", "/enterprise"],
   ["Gallery", "/gallery"],
   ["News", "/news"],
   ["Team", "/team"],

@@ -303,9 +303,15 @@ export function Footer() {
 
 export default function SiteLayout() {
   const { pathname } = useLocation();
+  const isTransparentHeader =
+    pathname === "/" ||
+    pathname === "/about" ||
+    pathname === "/programs" ||
+    pathname === "/facilities" ||
+    pathname === "/team";
   return (
     <>
-      <Header inner={pathname !== "/"} />
+      <Header inner={!isTransparentHeader} />
       <main id="main" tabIndex={-1}>
         <Outlet />
       </main>
