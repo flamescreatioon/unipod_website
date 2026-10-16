@@ -65,11 +65,11 @@ export const teamMembers = [
     },
   },
   {
-    id: "enterprise-lead",
-    name: "Ngozi Adeleke",
-    role: "Innovation & Enterprise Coordinator",
+    id: "volunteer-lead",
+    name: "Achor Ugochukwu Nelson",
+    role: "Students and Volunteer Lead",
     location: "UMUDIKE, NIGERIA",
-    image: "",
+    image: "public/assets/teams/ugo.jpg",
     bgColor: "#9d8ac7",
     socials: {
       instagram: "#",
