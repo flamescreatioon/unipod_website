@@ -77,7 +77,7 @@ export default function Team() {
       {/* Team Hero structured identically to Main Hero */}
       <section className="hero [--emphasis:var(--color-gold)] relative flex h-[100svh] min-h-[580px] max-h-[1080px] w-full flex-col justify-between overflow-hidden bg-[#081a2a] text-white">
         <div
-          className="hero-image absolute inset-0 bg-[url('/assets/hero/reception.jpg')] bg-cover bg-center"
+          className="hero-image absolute inset-0 bg-[url('/assets/hero/reception.webp')] bg-cover bg-center"
           role="img"
           aria-label="Manu-Tech UniPod Team and Hub"
         />
@@ -179,6 +179,8 @@ export default function Team() {
                         <img
                           src={member.image}
                           alt={name}
+                          loading="lazy"
+                          decoding="async"
                           className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (

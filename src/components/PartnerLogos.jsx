@@ -8,7 +8,7 @@ export default function PartnerLogos({ className = "", includeMouau = true, vari
         {
           name: "Michael Okpara University of Agriculture, Umudike",
           shortName: "MOUAU",
-          src: "/assets/mouau-mark.png",
+          src: "/assets/mouau-mark.webp",
         },
       ]
     : partnerLogos;

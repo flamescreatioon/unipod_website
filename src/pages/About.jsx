@@ -10,32 +10,32 @@ const QUOTES = [
     quote:
       "This project is a strategic investment in Nigeria’s future, it reinforces the Federal Government’s commitment to repositioning higher education as a catalyst for innovation, research commercialisation, entrepreneurship and job creation.",
     author: "Minister of Education, Dr. Maruf Olatunji Alausa",
-    image: "/assets/about/tunji.jpg",
+    image: "/assets/about/tunji.webp",
   },
   {
     quote:
       "The siting of the Manu-Tech UniPod in Abia speaks eloquently to the institutional faith the UNDP and the Federal Government of Nigeria have reposed in our dear State and the potential it holds as an engine of growth and economic prosperity in the region.",
     author: "Governor Alex Otti",
-    image: "/assets/about/otti.jpg",
+    image: "/assets/about/otti.webp",
   },
   {
     quote:
       "The hour of big dreams and great ambitions has arrived. If we fully harness the potential of this Manu-Tech University Innovation Pod, our challenge will no longer be finding markets but building the capacity to serve customers across Africa and the world.",
     author: "Governor Alex Otti",
-    image: "/assets/about/otti-and-ahunna.jpg",
+    image: "/assets/about/otti-and-ahunna.webp",
   },
   {
     quote:
       "This initiative represents far more than the commissioning of another university facility. It is the unveiling of the broad national vision that positions our universities as agents of industrial transformation, innovation, enterprise creation, and sustainable economic development.",
     author: "Minister of Education, Dr. Maruf Olatunji Alausa",
-    image: "/assets/about/tunji.jpg",
+    image: "/assets/about/tunji.webp",
   },
   {
     quote:
       "This Innovation Pod—this UniPod—is one thread in that grand tapestry. Here, in Abia State, Nigeria, we believe in the impossible. What this Innovation Pod represents is more than a physical space. It is a commitment to unlock the creative and innovative potential of Africa’s youth. Here, engineering meets art. Business meets social enterprise. The boundaries between disciplines dissolve. Here, failure is a critical step in innovation. Here, diversity of thought is our greatest asset.",
     author:
       "United Nations Assistant Secretary-General, H.E. Ahunna Eziakonwa",
-    image: "/assets/about/otti-and-ahunna.jpg",
+    image: "/assets/about/otti-and-ahunna.webp",
   },
 ];
 
@@ -98,7 +98,7 @@ export default function About() {
       {/* About Hero structured identically to Main Hero */}
       <section className="hero [--emphasis:var(--color-gold)] relative h-[100svh] min-h-[580px] max-h-[1080px] w-full overflow-hidden bg-[#081a2a] text-white flex flex-col justify-between">
         <div
-          className="hero-image absolute inset-0 bg-[url('/assets/about/about-hero.jpg')] bg-cover bg-center"
+          className="hero-image absolute inset-0 bg-[url('/assets/about/about-hero.webp')] bg-cover bg-center"
           role="img"
           aria-label="About Manu-Tech UniPod workspace"
         />

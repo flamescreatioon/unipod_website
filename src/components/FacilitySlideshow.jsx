@@ -3,19 +3,19 @@ import { createImageUrlBuilder } from "@sanity/image-url";
 import { sanityClient } from "../lib/sanity";
 
 const DEFAULT_FACILITY_SLIDES = [
-  { src: "/assets/facility/P1079635.jpg", caption: "Photography and Video Studio" },
-  { src: "/assets/facility/P1079638.jpg", caption: "Recording Room and Radio Station" },
-  { src: "/assets/facility/P1079639.jpg", caption: "Recording Room and Radio Station" },
-  { src: "/assets/facility/P1079652.jpg", caption: "Music Studio and Recording Studio" },
-  { src: "/assets/facility/P1079655.jpg", caption: "Agritech and Food Lab" },
-  { src: "/assets/facility/P1079657.jpg", caption: "Prototype Lab" },
-  { src: "/assets/facility/P1079664.jpg", caption: "Design Studio" },
-  { src: "/assets/facility/P1079669.jpg", caption: "Woodworks Workshop" },
-  { src: "/assets/facility/P1079674.jpg", caption: "Metalwork and CNC Workshop" },
-  { src: "/assets/facility/P1079694.jpg", caption: "Renewable Energy & Power Engineering Lab" },
-  { src: "/assets/facility/P1079695.jpg", caption: "Renewable Energy & Power Engineering Lab" },
-  { src: "/assets/facility/P1079696.jpg", caption: "Renewable Energy & Power Engineering Lab" },
-  { src: "/assets/facility/P1079699.jpg", caption: "Prototype Lab" },
+  { src: "/assets/facility/P1079635.webp", caption: "Photography and Video Studio" },
+  { src: "/assets/facility/P1079638.webp", caption: "Recording Room and Radio Station" },
+  { src: "/assets/facility/P1079639.webp", caption: "Recording Room and Radio Station" },
+  { src: "/assets/facility/P1079652.webp", caption: "Music Studio and Recording Studio" },
+  { src: "/assets/facility/P1079655.webp", caption: "Agritech and Food Lab" },
+  { src: "/assets/facility/P1079657.webp", caption: "Prototype Lab" },
+  { src: "/assets/facility/P1079664.webp", caption: "Design Studio" },
+  { src: "/assets/facility/P1079669.webp", caption: "Woodworks Workshop" },
+  { src: "/assets/facility/P1079674.webp", caption: "Metalwork and CNC Workshop" },
+  { src: "/assets/facility/P1079694.webp", caption: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079695.webp", caption: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079696.webp", caption: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079699.webp", caption: "Prototype Lab" },
 ];
 
 function imageUrl(image) {
@@ -90,7 +90,7 @@ export default function FacilitySlideshow({
   if (!validSlides.length)
     return (
       <div
-        className="absolute inset-0 scale-[1.02] bg-[url('/assets/facility/P1079635.jpg')] bg-cover bg-center brightness-[.62]"
+        className="absolute inset-0 scale-[1.02] bg-[url('/assets/facility/P1079635.webp')] bg-cover bg-center brightness-[.62]"
         aria-hidden="true"
       />
     );

@@ -15,7 +15,7 @@ export function Brand({ includeUndp = false }) {
     >
       <img
         className="unipod-logo h-[54px] w-[100px] object-contain max-[800px]:h-[42px] max-[800px]:w-[68px]"
-        src="/assets/unipod-icon.png"
+        src="/assets/unipod-icon.webp"
         alt="UniPod"
         width="100"
         height="54"
@@ -23,7 +23,7 @@ export function Brand({ includeUndp = false }) {
       <span className="logo-divider h-[27px] w-px bg-current opacity-45 max-[800px]:h-[26px]" aria-hidden="true" />
       <img
         className="mouau-logo h-[54px] w-[54px] object-contain max-[800px]:h-[41px] max-[800px]:w-[41px]"
-        src="/assets/mouau-mark.png"
+        src="/assets/mouau-mark.webp"
         alt="Michael Okpara University of Agriculture, Umudike"
         width="54"
         height="54"
@@ -33,7 +33,7 @@ export function Brand({ includeUndp = false }) {
           <span className="logo-divider h-[27px] w-px bg-current opacity-45 max-[800px]:h-[26px]" aria-hidden="true" />
           <img
             className="undp-header-logo h-[80px] w-[66px] object-contain max-[800px]:h-[41px] max-[800px]:w-[50px]"
-            src="/assets/undp-logo.png"
+            src="/assets/undp-logo.webp"
             alt="United Nations Development Programme"
             width="66"
             height="80"

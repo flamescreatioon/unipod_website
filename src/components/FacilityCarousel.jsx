@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 
 export const FACILITY_IMAGES = [
-  { src: "/assets/facility/P1079635.jpg", alt: "Photography and Video Studio" },
-  { src: "/assets/facility/P1079638.jpg", alt: "Recording Room and Radio Station" },
-  { src: "/assets/facility/P1079639.jpg", alt: "Recording Room and Radio Station" },
-  { src: "/assets/facility/P1079652.jpg", alt: "Music Studio and Recording Studio" },
-  { src: "/assets/facility/P1079655.jpg", alt: "Agritech and Food Lab" },
-  { src: "/assets/facility/P1079657.jpg", alt: "Prototype Lab" },
-  { src: "/assets/facility/P1079664.jpg", alt: "Design Studio" },
-  { src: "/assets/facility/P1079669.jpg", alt: "Woodworks Workshop" },
-  { src: "/assets/facility/P1079674.jpg", alt: "Metalwork and CNC Workshop" },
-  { src: "/assets/facility/P1079694.jpg", alt: "Renewable Energy & Power Engineering Lab" },
-  { src: "/assets/facility/P1079695.jpg", alt: "Renewable Energy & Power Engineering Lab" },
-  { src: "/assets/facility/P1079696.jpg", alt: "Renewable Energy & Power Engineering Lab" },
-  { src: "/assets/facility/P1079699.jpg", alt: "Prototype Lab" },
+  { src: "/assets/facility/P1079635.webp", alt: "Photography and Video Studio" },
+  { src: "/assets/facility/P1079638.webp", alt: "Recording Room and Radio Station" },
+  { src: "/assets/facility/P1079639.webp", alt: "Recording Room and Radio Station" },
+  { src: "/assets/facility/P1079652.webp", alt: "Music Studio and Recording Studio" },
+  { src: "/assets/facility/P1079655.webp", alt: "Agritech and Food Lab" },
+  { src: "/assets/facility/P1079657.webp", alt: "Prototype Lab" },
+  { src: "/assets/facility/P1079664.webp", alt: "Design Studio" },
+  { src: "/assets/facility/P1079669.webp", alt: "Woodworks Workshop" },
+  { src: "/assets/facility/P1079674.webp", alt: "Metalwork and CNC Workshop" },
+  { src: "/assets/facility/P1079694.webp", alt: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079695.webp", alt: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079696.webp", alt: "Renewable Energy & Power Engineering Lab" },
+  { src: "/assets/facility/P1079699.webp", alt: "Prototype Lab" },
 ];
 
 function getRandomIndex(excludeIndex, length) {

@@ -20,7 +20,7 @@ export default function Programs() {
       {/* Programs Hero structured identically to Main Hero */}
       <section className="hero [--emphasis:var(--color-gold)] relative h-[100svh] min-h-[580px] max-h-[1080px] w-full overflow-hidden bg-[#081a2a] text-white flex flex-col justify-between">
         <div
-          className="hero-image absolute inset-0 bg-[url('/assets/programs/programs-hero.jpg')] bg-cover bg-center"
+          className="hero-image absolute inset-0 bg-[url('/assets/programs/programs-hero.webp')] bg-cover bg-center"
           role="img"
           aria-label="Manu-Tech UniPod programmes and training"
         />

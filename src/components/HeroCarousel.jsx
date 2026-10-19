@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 
 const HERO_IMAGES = [
-  { src: "/assets/hero/reception.jpg", alt: "UniPod Reception area" },
-  { src: "/assets/hero/brand_it.jpg", alt: "Brand It design workspace" },
-  { src: "/assets/hero/design.jpg", alt: "Design and modeling lab" },
-  { src: "/assets/hero/design2.jpg", alt: "Design and prototyping studio" },
-  { src: "/assets/hero/laser.jpg", alt: "Laser cutting and fabrication equipment" },
-  { src: "/assets/hero/prototype.jpg", alt: "Prototyping equipment and workspace" },
+  { src: "/assets/hero/reception.webp", alt: "UniPod Reception area" },
+  { src: "/assets/hero/brand_it.webp", alt: "Brand It design workspace" },
+  { src: "/assets/hero/design.webp", alt: "Design and modeling lab" },
+  { src: "/assets/hero/design2.webp", alt: "Design and prototyping studio" },
+  { src: "/assets/hero/laser.webp", alt: "Laser cutting and fabrication equipment" },
+  { src: "/assets/hero/prototype.webp", alt: "Prototyping equipment and workspace" },
 ];
 
 function getRandomIndex(excludeIndex, length) {

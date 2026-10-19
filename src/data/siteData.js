@@ -11,12 +11,12 @@ export const partnerLogos = [
   {
     name: "Federal Government of Nigeria",
     shortName: "FGN",
-    src: "/assets/fgn-logo.png",
+    src: "/assets/fgn-logo.webp",
   },
   {
     name: "United Nations Development Programme",
     shortName: "UNDP",
-    src: "/assets/undp-logo.png",
+    src: "/assets/undp-logo.webp",
   },
   {
     name: "Tertiary Education Trust Fund",
