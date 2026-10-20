@@ -44,6 +44,7 @@ jobs:
           FTP_SERVER_RAW: ${{ secrets.FTP_SERVER }}
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          FTP_PROTO_RAW: ${{ secrets.FTP_PROTOCOL }}
         run: |
           if [ -z "$FTP_SERVER_RAW" ]; then
             echo "::error::Secret FTP_SERVER is missing or empty! Please add it in Repository Settings -> Secrets and variables -> Actions."
@@ -62,6 +63,14 @@ jobs:
           CLEAN_SERVER=$(echo "$FTP_SERVER_RAW" | sed -E 's|^[a-zA-Z]+://||' | sed -E 's|/.*$||' | tr -d '[:space:]')
           echo "server=$CLEAN_SERVER" >> "$GITHUB_OUTPUT"
 
+          # Determine protocol: if unset or 'ftp', upgrade to 'ftps' since server requires TLS
+          CLEAN_PROTO=$(echo "$FTP_PROTO_RAW" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+          if [ -z "$CLEAN_PROTO" ] || [ "$CLEAN_PROTO" = "ftp" ]; then
+            CLEAN_PROTO="ftps"
+          fi
+          echo "protocol=$CLEAN_PROTO" >> "$GITHUB_OUTPUT"
+          echo "Configured protocol: $CLEAN_PROTO on host: $CLEAN_SERVER"
+
       - name: 🚀 Sync to FTP Server
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
@@ -69,7 +78,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
-          protocol: ${{ secrets.FTP_PROTOCOL || 'ftps' }}
+          protocol: ${{ steps.ftp-prep.outputs.protocol }}
           security: loose
+          log-level: verbose
           server-dir: ${{ secrets.FTP_SERVER_DIR || 'public_html/' }}
           local-dir: ./dist/
