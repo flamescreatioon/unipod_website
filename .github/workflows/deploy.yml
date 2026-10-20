@@ -38,10 +38,34 @@ jobs:
           VITE_SANITY_STUDIO_URL: ${{ secrets.VITE_SANITY_STUDIO_URL }}
         run: npm run build
 
+      - name: 🔍 Validate & Prepare FTP Config
+        id: ftp-prep
+        env:
+          FTP_SERVER_RAW: ${{ secrets.FTP_SERVER }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          if [ -z "$FTP_SERVER_RAW" ]; then
+            echo "::error::Secret FTP_SERVER is missing or empty! Please add it in Repository Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          if [ -z "$FTP_USER" ]; then
+            echo "::error::Secret FTP_USERNAME is missing or empty! Please add it in Repository Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          if [ -z "$FTP_PASS" ]; then
+            echo "::error::Secret FTP_PASSWORD is missing or empty! Please add it in Repository Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+
+          # Strip protocol (ftp://, ftps://, etc.) and any trailing paths/slashes or whitespace
+          CLEAN_SERVER=$(echo "$FTP_SERVER_RAW" | sed -E 's|^[a-zA-Z]+://||' | sed -E 's|/.*$||' | tr -d '[:space:]')
+          echo "server=$CLEAN_SERVER" >> "$GITHUB_OUTPUT"
+
       - name: 🚀 Sync to FTP Server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: ${{ steps.ftp-prep.outputs.server }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
